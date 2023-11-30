@@ -5,10 +5,10 @@ const { request } = require("http");
 const app = express()
 
 app.engine('handlebars', exphbs.engine())
-app.set('view enigine', 'handlebars')
+app.set('view engine', 'handlebars')
 
 app.get('/', (req, res) =>{
-    res.send("Ola mundo")
+    res.render('home')
 })
 
 app.listen(3000, ()=>{
