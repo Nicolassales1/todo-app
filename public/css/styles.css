@@ -8,15 +8,19 @@
 
 :root {
     --bg-header-mobile: url(../imagens/bg-header-mobile-light.png);
+    --bg-header-desktop: url(../imagens/bg-header-desktop-light.png);
     --input-box-shadow: rgba(194, 195, 214, 0.50);
     --input-color: #494C6B;
+    --placeholder-color:#9495A5;
     --button-color: #393A4B;
+    --button-color-hover:#494C6B;
     --bg-body: #FAFAFA;
     --bg-tarefas: #FFF;
     --box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.50);
-    --border-color: #E3E4F1
-    --text-color:#494C6B;
+    --border-color: #E3E4F1 --text-color:#494C6B;
     --info-text-color: #9495A5;
+    --info-button-hover:#494C6B;
+    --info-button-active: #3A7CFD;
 }
 
 
@@ -32,16 +36,16 @@ header {
     height: 12.5rem;
 
     padding: 3rem 1.75rem 0;
-    
+
 }
 
-header >  div{
+header>div {
     max-width: 33.75rem;
     margin-inline: auto;
 }
 
 
-header div div{
+header div div {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -70,6 +74,10 @@ header form input {
     color: var(--input-color);
 }
 
+header form input:placeholder {
+    color: var(--placeholder-color);
+}
+
 header form button {
     padding: 0.75rem;
     border-radius: 0.3125rem;
@@ -79,7 +87,6 @@ header form button {
 }
 
 main {
-    min-height: calc(100vh -12.5rem);
     padding-inline: 1.75rem;
 }
 
@@ -111,7 +118,7 @@ main {
     align-items: center;
     gap: 0.75rem;
 
-    color:var(--text-color);
+    color: var(--text-color);
     font-size: 0.75rem;
 }
 
@@ -120,7 +127,8 @@ main {
     background: none;
 
 }
-.informacoes{
+
+.informacoes {
     border-top: 1px solid var(--border-color);
     padding: 1rem 1.25rem;
     display: flex;
@@ -128,55 +136,102 @@ main {
     font-size: 0.75rem;
     color: var(--info-text-color);
 }
+
 .informacoes a,
 .botoes a {
     text-decoration: none;
     color: var(--info-text-color);
 }
 
-.informações .botoes{
+.informações .botoes {
     display: none;
 }
 
-.botoes{
+.botoes {
     padding-block: 1rem;
     background: var(--bg-tarefas);
     border-radius: 0.3125rem;
     margin-top: 1rem;
-    max-width:33.75rem;
+    max-width: 33.75rem;
     margin-inline: auto;
 
     display: flex;
     justify-content: center;
     gap: 1.2rem;
 
-    font-size:0.875rem;
+    font-size: 0.875rem;
+}
+.botoes .active{
+    color:var(--info-button-active);
 }
 
-@media(min-width:1000px){
-    section.botoes{
+@media(min-width:1000px) {
+
+    header {
+        background-image: var(--bg-header-desktop);
+        height: 18.75rem;
+        padding-top: 4.35rem;
+    }
+
+    header div div {
+        margin-bottom: 3rem;
+    }
+
+    header form input {
+        padding: 1.25rem 1.5rem;
+        font-size: 1.125rem;
+    }
+
+    header form button {
+        font-size: 1.125rem;
+    }
+
+    header form button:hover{
+        cursor: pointer;
+        background: var(--button-color-hover);
+    }
+
+    .tarefas{
+        margin-top: -3rem;
+    }
+    .tarefas .tarefa {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .tarefa div {
+        font-size: 1.125rem;
+    }
+
+    section.botoes {
         display: none;
     }
 
-    .informacoes .botoes{
+    .informacoes .botoes {
         display: flex;
         padding: 0;
         margin: 0;
         gap: 2rem;
+
     }
-    .tarefa button{
+
+    .informacoes{
+        font-size: 0.875rem;
+    }
+    .informacoes a:hover{
+        color:var(--info-button-hover)
+    }
+
+    .tarefa button {
         visibility: hidden;
     }
- 
+
     .tarefa input:hover,
     .tarefa label:hover,
-    .tarefa button:hover
-    {
+    .tarefa button:hover {
         cursor: pointer;
     }
 
-    .tarefa:hover button{
+    .tarefa:hover button {
         visibility: initial;
     }
 }
-
