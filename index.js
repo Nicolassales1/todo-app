@@ -20,6 +20,24 @@ app.use(express.json());
 
 //rotas
 
+app.post('/completar', (requisicao, resposta) => {
+    const id = requisicao.body.id;
+
+    const sql = `
+        UPDATE tarefas
+        SET completa ='1'
+        WHERE id = ${id}
+    `;
+
+    conexao.query(sql, (erro) => {
+        if (erro) {
+            return console.log(erro);
+        }
+
+        resposta.redirect('/');
+    });
+});
+
 app.post('/criar', (requisicao, resposta) => {
     const descricao = requisicao.body.descricao;
 
@@ -30,13 +48,13 @@ app.post('/criar', (requisicao, resposta) => {
     VALUES ('${descricao}','${completa}')
     `;
 
-    conexao.query(sql, (erro => {
+    conexao.query(sql, (erro) => {
         if (erro) {
             return console.log(erro);
         }
 
         resposta.redirect('/');
-    }));
+    });
 });
 
 app.get('/', (requisicao, resposta) => {
@@ -52,7 +70,7 @@ app.get('/', (requisicao, resposta) => {
             return {
                 id: dado.id,
                 descricao: dado.descricao,
-                completa: dados.completa === 0 ? false : true
+                completa: dado.completa === 0 ? false : true
             };
         });
 
