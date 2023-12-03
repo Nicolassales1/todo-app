@@ -2,6 +2,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const mysql = require("mysql2");
 const { request } = require("http");
+const { Console } = require("console");
 
 const app = express();
 
@@ -38,23 +39,23 @@ app.post('/completar', (requisicao, resposta) => {
     });
 });
 
-app.post('/descompletar', (requisicao, resposta) =>{
-    const id = requisicao.body.id
+app.post('/descompletar', (requisicao, resposta) => {
+    const id = requisicao.body.id;
 
     const sql = `
         UPDATE tarefas 
         SET completa = '0'
         WHERE id = ${id}
 
-    `
-    conexao.query(sql, (erro) =>{
-        if (erro){
-            return console.log(erro)
+    `;
+    conexao.query(sql, (erro) => {
+        if (erro) {
+            return console.log(erro);
         }
 
-        resposta.redirect('/')
-    })
-})
+        resposta.redirect('/');
+    });
+});
 
 app.post('/criar', (requisicao, resposta) => {
     const descricao = requisicao.body.descricao;
@@ -75,9 +76,31 @@ app.post('/criar', (requisicao, resposta) => {
     });
 });
 
-app.get('/ativas', (requisicao, resposta) =>{
-    
-})
+app.get('/ativas', (requisicao, resposta) => {
+    const sql = `
+    SELECT * FROM tarefas
+    WHERE completa = 0
+    `;
+
+    conexao.query(sql, (erro,dados) => {
+       if (erro){
+        return Console.log(erro)
+       }
+
+        const tarefas = dados.map((dado) => {
+            return {
+                id: dado.id,
+                descricao: dado.descricao,
+                completa: false
+
+            };
+        });
+
+        const quantidadeTarefas = tarefas.length;
+
+        resposta.render('ativas', { tarefas, quantidadeTarefas });
+    });
+});
 
 app.get('/', (requisicao, resposta) => {
 
@@ -96,11 +119,11 @@ app.get('/', (requisicao, resposta) => {
             };
         });
 
-        const tarefasAtivas= tarefas.filter((tarefa) => {
-            return tarefa.completa === false && tarefa
+        const tarefasAtivas = tarefas.filter((tarefa) => {
+            return tarefa.completa === false && tarefa;
         });
 
-        const quantidadeTarefasAtivas= tarefasAtivas.length
+        const quantidadeTarefasAtivas = tarefasAtivas.length;
 
         resposta.render('home', { tarefas, quantidadeTarefasAtivas });
     });
